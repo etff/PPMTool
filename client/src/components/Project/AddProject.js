@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
-import { tsObjectKeyword } from '@babel/types';
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {createProject} from '../../actions/projectActions';
+import PropTypes from 'prop-types';
+// import { tsObjectKeyword } from '@babel/types';
 
 class AddProject extends Component {
     constructor() {
@@ -31,7 +34,7 @@ class AddProject extends Component {
             end_date:this.state.end_date            
         };
 
-        console.log(newProject);
+        this.props.createProject(newProject, this.props.history)
     }
     
     render() {
@@ -100,8 +103,15 @@ class AddProject extends Component {
             </div>
         </div>
     </div>
-        )
+        );
     }
 }
 
-export default  AddProject;
+AddProject.propType = {
+    createProject : PropTypes.func.isRequired
+};
+
+export default connect(
+    null, 
+    {createProject}
+    )(AddProject);
